@@ -11,14 +11,14 @@ total_price = 0
 
 while True:
     item = input(f"Enter product {i} name. Enter e to exit: ")
-    
+
     if item.lower() == 'e':
         break
 
     quantity = int(input(f"Enter quantity of {item}: "))
     price = int(input(f"Enter price of 1 quantity of {item}: "))
     i+=1
-    
+
     products.append(item)
     quantities.append(quantity)
     prices.append(price)
@@ -53,7 +53,7 @@ print('--------------------')
 print(f'''Particulars              Details
 
 Invoice Number:          {invoice_no}
-Invoice Date:            06/11/2026
+Invoice Date:            07/11/2026
 Payment Mode:            Bank Transaction''')
 print()
 print("Buyer Details")
@@ -86,7 +86,6 @@ if place.lower() == 'kerala':
     CGST = 9/100 * taxable_price
     SGST = 9/100 * taxable_price
     GST = CGST + SGST
-
     final_value = GST + taxable_price
 
     print(f'''Particulars              Details
@@ -99,7 +98,6 @@ Total GST:               {GST}''')
 
 else:
     GST = IGST = 18/100 * taxable_price
-
     final_value = GST + taxable_price
 
     print(f'''Particulars              Details
