@@ -2,32 +2,37 @@ name = input("Enter Customer name: ")
 place = input("Enter Customer's state: ")
 invoice_no = input("Enter Invoice number: ")
 products = []
-i = 1
 quantities = []
 prices = []
 inventory = {}
 total_prices = []
 total_price = 0
 
-while True:
-    item = input(f"Enter product {i} name. Enter e to exit: ")
+def inventory_choice():
+    i = 1
+    while True:
+        item = input(f"Enter product {i} name. Enter e to exit: ")
 
-    if item.lower() == 'e':
-        break
+        if item.lower() == 'e':
+            break
 
-    quantity = int(input(f"Enter quantity of {item}: "))
-    price = int(input(f"Enter price of 1 quantity of {item}: "))
-    i+=1
+        quantity = int(input(f"Enter quantity of {item}: "))
+        price = int(input(f"Enter price of 1 quantity of {item}: "))
+        i+=1
 
-    products.append(item)
-    quantities.append(quantity)
-    prices.append(price)
+        products.append(item)
+        quantities.append(quantity)
+        prices.append(price)
 
-for n, q, p in zip(products, quantities, prices):
-    inventory[n] = {"quantity": q, "price": p}
+inventory_choice()
 
-for i in inventory:
-    price = inventory[i]["quantity"]*inventory[i]["price"]
+if not products:
+    choice = input("Are you sure you have no products? (y/n): ")
+    if choice.lower() == 'n':
+        inventory_choice()
+
+for q, p in zip(quantities, prices):
+    price = q*p
 
     total_prices.append(price)
 
@@ -44,10 +49,10 @@ taxable_price = total_price - discount_amount
 print()
 print("Assuming business to be located at Kerala with 18% GST")
 print()
-print('''SDV Traders
-Alappuzha, Kerala - 688001
-TAX INVOICE''')
-print('--------------------')
+print('''                    SDV Traders
+             Alappuzha, Kerala - 688001
+                    TAX INVOICE''')
+print('             --------------------')
 print("Invoice Details")
 print('--------------------')
 print(f'''Particulars              Details
@@ -67,8 +72,14 @@ print("Product Details")
 print('--------------------')
 print(f'Product                    Quantity       Rate      Amount')
 print()
-for i in inventory:
-    print(f'{i}         {inventory[i]["quantity"]}               {inventory[i]["price"]}         {inventory[i]["amount"]}')
+item_space, space, qty_space, rate_space, amt_space = " "*27, " "*2, " "*12, " "*8, " "*9
+for item in inventory:
+    item_space = item + ((len(item_space) - len(item))*" ")
+    qty_space = str(inventory[item]["quantity"]) + ((len(qty_space) - len(str(inventory[item]["quantity"])))*" ")
+    rate_space = str(inventory[item]["price"]) + ((len(rate_space) - len(str(inventory[item]["price"])))*" ")
+    amt_space = str(inventory[item]["amount"]) + ((len(amt_space) - len(str(inventory[item]["amount"])))*" ")
+    string = item_space + space + qty_space + space + rate_space + space + amt_space
+    print(string)
 print()
 print(f"Subtotal is {total_price}")
 print()
@@ -78,32 +89,32 @@ print(f'''Particulars              Details
 
 Subtotal:                {total_price}
 Discount ({discount}%):          {discount_amount}
-Taxable Value:            {taxable_price}''')
+Taxable Value:           {taxable_price}''')
 print()
 print("GST Calculation")
 print('--------------------')
 if place.lower() == 'kerala':
-    CGST = 9/100 * taxable_price
-    SGST = 9/100 * taxable_price
+    CGST = round(9/100 * taxable_price, 2)
+    SGST = round(9/100 * taxable_price, 2)
     GST = CGST + SGST
     final_value = GST + taxable_price
 
     print(f'''Particulars              Details
 
-CGST (9%):               {CGST}
-SGST (9%):               {SGST}
-Total GST:               {GST}''')
+CGST (9%):               {CGST: .2f}
+SGST (9%):               {SGST: .2f}
+Total GST:               {GST: .2f}''')
     print()
     print(f"Grand Total: {final_value}")
 
 else:
-    GST = IGST = 18/100 * taxable_price
+    GST = IGST = round(18/100 * taxable_price, 2)
     final_value = GST + taxable_price
 
     print(f'''Particulars              Details
 
-    IGST (18%):              {IGST}
-    Total GST:               {GST}''')
+    IGST (18%):              {IGST: .2f}
+    Total GST:               {GST: .2f}''')
     print()
     print(f"Grand Total: {final_value}")
 print()
