@@ -49,10 +49,10 @@ taxable_price = total_price - discount_amount
 print()
 print("Assuming business to be located at Kerala with 18% GST")
 print()
-print('''                    SDV Traders
-             Alappuzha, Kerala - 688001
-                    TAX INVOICE''')
-print('             --------------------')
+print('''SDV Traders
+         Alappuzha, Kerala - 688001
+         TAX INVOICE''')
+print('--------------------')
 print("Invoice Details")
 print('--------------------')
 print(f'''Particulars              Details
